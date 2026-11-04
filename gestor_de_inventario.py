@@ -39,7 +39,26 @@ class inventario:
             print(f"ID: {producto.id}, Nombre: {producto.nombre}, Precio: {producto.precio}, Stock: {producto.stock}, Categoria: {producto.categoria}")
 
 
+    def registrar_venta(self, id, cantidad):
+        for producto in self.productos:
+            if producto.id == id:
+                if producto.stock >= cantidad:
+                    producto.stock -= cantidad
+                    print("¡Venta registrada con éxito!")
+                    return True
+                else:
+                    print("Error: No hay suficiente stock disponible.")
+                    return False
+        
+        print("Error: El producto no existe en el inventario.")
+        return False
 
+
+    def alerta_stock(self, limite=5):
+        print("Productos con stock bajo:")
+        for producto in self.productos:
+            if producto.stock < limite:
+                print(f"alerta este producto tiene stock bajo: ID: {producto.id}, Nombre: {producto.nombre}, Stock: {producto.stock}")
 
 
 """
