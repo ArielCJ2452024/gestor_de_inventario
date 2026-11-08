@@ -1,5 +1,5 @@
 
-
+from datetime import datetime
 
 """creacion de productos"""
 
@@ -16,6 +16,7 @@ class inventario:
 
     def __init__(self):
         self.productos = []
+        self.historial = []
 
     def agregar_productos(self, producto):
 
@@ -44,6 +45,11 @@ class inventario:
             if producto.id == id:
                 if producto.stock >= cantidad:
                     producto.stock -= cantidad
+                    
+                    fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    transaccion = f"[{fecha_hora}] Venta: ID: {producto.id}, Nombre: {producto.nombre}, Cantidad: {cantidad}, Precio unitario: {producto.precio}, Total: {producto.precio * cantidad}"
+                    self.historial.append(transaccion)
+
                     print("¡Venta registrada con éxito!")
                     return True
                 else:
@@ -61,11 +67,25 @@ class inventario:
                 print(f"alerta este producto tiene stock bajo: ID: {producto.id}, Nombre: {producto.nombre}, Stock: {producto.stock}")
 
 
-"""
-(producto1 = producto(1, "Camiseta", 20.0, 50, "Ropa")
+    def mostrar_historial(self):
+        print ("Historial de transacciones:")
+        if not self.historial:
+            print("No hay transacciones registradas.")
+        else:
+            for transaccion in self.historial:
+                print(transaccion)
+
+
+
+
+    
+
+producto1 = producto(1, "Camiseta", 20.0, 50, "Ropa")
 
 MI_inventario = inventario()
 MI_inventario.agregar_productos(producto1)
 MI_inventario.mostrar_productos()
 
-"""
+venta_exitosa = MI_inventario.registrar_venta(1, 10)
+
+historial = MI_inventario.mostrar_historial()
