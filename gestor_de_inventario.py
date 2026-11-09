@@ -1,7 +1,6 @@
 
 from datetime import datetime
 
-"""creacion de productos"""
 
 class producto:
     def __init__(self, id, nombre, precio, stock, categoria):
@@ -12,14 +11,46 @@ class producto:
         self.categoria = categoria
 
 
+
+class proveedor:
+    def __init__(self, rnc, nombre, telefono, correo):
+        self.rnc = rnc
+        self.nombre = nombre
+        self.telefono = telefono
+        self.correo = correo
+
+
 class inventario:
 
     def __init__(self):
         self.productos = []
         self.historial = []
+        self.proveedores = []
+
+    def agregar_proveedor(self, proveedor):
+        for p in self.proveedores:
+            if p.rnc == proveedor.rnc:
+                print("El proveedor ya existe en el inventario.")
+                return False
+        self.proveedores.append(proveedor)
+        print("Proveedor agregado con éxito.")
+        return True
+
+    def eliminar_proveedor(self, rnc):
+        for proveedor in self.proveedores:
+            if proveedor.rnc == rnc:
+                self.proveedores.remove(proveedor)
+                print("Proveedor eliminado con éxito.")
+                return True
+        print("El proveedor no existe en el inventario.")
+        return False
+
+    def mostrar_proveedores(self):
+        print("Lista de proveedores:")
+        for proveedor in self.proveedores:
+            print(f"RNC: {proveedor.rnc}, Nombre: {proveedor.nombre}, Teléfono: {proveedor.telefono}, Correo: {proveedor.correo}")
 
     def agregar_productos(self, producto):
-
         for p in self.productos:
             if p.id == producto.id:
                 p.stock += producto.stock
@@ -75,10 +106,6 @@ class inventario:
             for transaccion in self.historial:
                 print(transaccion)
 
-
-
-
-    
 
 producto1 = producto(1, "Camiseta", 20.0, 50, "Ropa")
 
